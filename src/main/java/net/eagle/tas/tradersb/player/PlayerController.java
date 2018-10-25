@@ -1,6 +1,7 @@
 package net.eagle.tas.tradersb.player;
 
 import net.eagle.tas.tradersb.ship.Ship;
+import net.eagle.tas.tradersb.ship.ShipHasProblemException;
 import net.eagle.tas.tradersb.world.World;
 import net.eagle.tas.tradersb.world.WorldIsMissingDataException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,23 @@ public class PlayerController {
         return rsp.getBody().getShip();
     }
 
+    @PutMapping("{id}/ship")
+    @ResponseBody
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
+    public ResponseEntity<Ship> updatePlayerShip(@PathVariable String id, @RequestBody Ship updatedShip) {
+        ResponseEntity<Player> rsp = getPlayer(id);
+        Player player = rsp.getBody();
+        try {
+            playerService.updateShip(player, updatedShip);
+            return new ResponseEntity<>(player.getShip(), HttpStatus.ACCEPTED);
+        } catch (ShipHasProblemException suhpe)
+        {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(suhpe.getHeaderName(), suhpe.getLocalizedMessage());
+            return new ResponseEntity<>(headers, suhpe.getErrorCode());
+        }
+    }
+
     @GetMapping("{id}/hex")
     public String getHex(@PathVariable String id) {
         ResponseEntity<Player> rsp = getPlayer(id);
@@ -50,13 +68,13 @@ public class PlayerController {
 
     @PutMapping("{id}/world")
     @ResponseBody
-    @ResponseStatus(value = HttpStatus.OK)
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
     public ResponseEntity<World> jump(@PathVariable String id, @RequestBody World destination) {
         ResponseEntity<Player> rsp = getPlayer(id);
         Player player = rsp.getBody();
         try {
             playerService.jump(player, destination);
-            return new ResponseEntity<>(player.getWorld(), HttpStatus.OK);
+            return new ResponseEntity<>(player.getWorld(), HttpStatus.ACCEPTED);
         } catch (WorldIsMissingDataException wimde) {
             HttpHeaders headers = new HttpHeaders();
             headers.set(wimde.getHeaderName(), wimde.getLocalizedMessage());

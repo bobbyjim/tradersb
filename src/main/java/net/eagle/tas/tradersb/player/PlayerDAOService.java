@@ -2,6 +2,9 @@ package net.eagle.tas.tradersb.player;
 
 import net.eagle.tas.tradersb.map.MapAccessible;
 import net.eagle.tas.tradersb.map.MapFactory;
+import net.eagle.tas.tradersb.ship.Ship;
+import net.eagle.tas.tradersb.ship.ShipHasProblemException;
+import net.eagle.tas.tradersb.ship.ShipValidator;
 import net.eagle.tas.tradersb.util.UniqueGenerator;
 import net.eagle.tas.tradersb.world.World;
 import net.eagle.tas.tradersb.world.WorldIsMissingDataException;
@@ -60,5 +63,12 @@ public class PlayerDAOService {
             player.setWorld(destination);
             savePlayer(player);
         }
+    }
+
+    public void updateShip(Player player, Ship updatedShip) throws ShipHasProblemException {
+
+        ShipValidator.validateShip(updatedShip);
+        player.ship = updatedShip;
+        savePlayer(player);
     }
 }
