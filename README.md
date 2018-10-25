@@ -4,14 +4,22 @@ Interstellar merchant simulation API. Carry passengers and cargo to other worlds
 # Source
 100% Java SpringBoot
 
-# API
+# GENERAL API
+```
+GET /ships             ; lists the ship types available
+```
+
+# PLAYER API
 ```
 POST /players          ; creates a new player
 GET /players/$id       ; returns the player record
-GET /ships             ; lists the ship types available
+
 GET /players/$id/ship  ; returns the player's ship record
+
 GET /players/$id/world ; returns the player's current world
 PUT /players/$id/world ; jumps to a neighboring world
+
+GET /players/$id/hex   ; returns the player's sector and hex number only
 ```
 
 # Status
