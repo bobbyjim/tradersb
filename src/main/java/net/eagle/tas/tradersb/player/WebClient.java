@@ -34,13 +34,13 @@ class WebClient extends Player implements Playable {
     public String loadShip() {
         String out = "";
         if (this.unloaded) {
-            ship.getFreight().load(this);
+            ship.getFreight().load(this.world, this.ship, getSkillLevel("liaison"));
             out = "\n  'freight': " + ship.getFreight().getCount() + ",";
-            ship.getLowPassengers().load(this);
+            ship.getLowPassengers().load(this.world, this.ship, getSkillLevel("streetwise"));
             out += "\n  'low passengers': " + ship.getLowPassengers().getCount() + ",";
-            ship.getMidPassengers().load(this);
+            ship.getMidPassengers().load(this.world, this.ship, getSkillLevel("admin"));
             out += "\n  'mid passengers': " + ship.getMidPassengers().getCount() + ",";
-            ship.getHighPassengers().load(this);
+            ship.getHighPassengers().load(this.world, this.ship, getSkillLevel("steward"));
             out += "\n  'high passengers': " + ship.getHighPassengers().getCount() + ",";
             ship.setCargo(CargoBuilder.buildCargo(world));
             out += "\n  'spec cargo price per ton': " + ship.getCargo().buyPrice + ",";

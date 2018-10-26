@@ -75,15 +75,15 @@ class Player implements Playable {
         String out = "";
         if (this.unloaded) {
             out = "\nLoading freight...";
-            ship.getFreight().load(this);
+            ship.getFreight().load(this.world, this.ship, getSkillLevel("liaison"));
             out += "   " + ship.getFreight().getCount() + " tons.";
 
             out += "\nLoading passengers...";
-            ship.getLowPassengers().load(this);
+            ship.getLowPassengers().load(this.world, this.ship, getSkillLevel("streetwise"));
             out += "\n   " + ship.getLowPassengers().getCount() + " low";
-            ship.getMidPassengers().load(this);
+            ship.getMidPassengers().load(this.world, this.ship, getSkillLevel("admin"));
             out += "\n   " + ship.getMidPassengers().getCount() + " mid";
-            ship.getHighPassengers().load(this);
+            ship.getHighPassengers().load(this.world, this.ship, getSkillLevel("steward"));
             out += "\n   " + ship.getHighPassengers().getCount() + " high";
 
             out += "\nLoading Speculative Cargo...";
@@ -91,6 +91,44 @@ class Player implements Playable {
             out += "\n   Buy price per ton: " + ship.getCargo().buyPrice;
         }
         return out;
+    }
+
+    public int loadFreight()
+    {
+        return ship.getFreight().load(this.world, this.ship, getSkillLevel("liaison"));
+    }
+
+    public int unloadFreight()
+    {
+        return ship.getFreight().unload(this.world);
+    }
+
+    public int loadPassengers()
+    {
+        return
+            ship.getLowPassengers().load(this.world, this.ship, getSkillLevel("streetwise"))
+          + ship.getMidPassengers().load(this.world, this.ship, getSkillLevel("admin"))
+          + ship.getHighPassengers().load(this.world, this.ship, getSkillLevel("steward"));
+    }
+
+    public int unloadPassengers()
+    {
+        return
+            ship.getHighPassengers().unload(world)
+          + ship.getMidPassengers().unload(world)
+          + ship.getLowPassengers().unload(world);
+    }
+
+    public int loadCargo()
+    {
+        ship.setCargo(CargoBuilder.buildCargo(this.world));
+        return ship.getCargo().getCount();
+    }
+
+    public int unloadCargo()
+    {
+        //Trade trade = TradeBuilder.buildTrade(ship.getCargo(), this.world);
+        return ship.getCargo().getCount();
     }
 
     /**
@@ -160,5 +198,15 @@ class Player implements Playable {
             return skills.get(skill.toLowerCase());
         else
             return 0; // default
+    }
+
+    public void improveSkill(String skill)
+    {
+        skills.put( skill.toLowerCase(), 1 + getSkillLevel(skill) );
+    }
+
+    public HashMap<String, Integer> getSkills()
+    {
+        return skills;
     }
 }

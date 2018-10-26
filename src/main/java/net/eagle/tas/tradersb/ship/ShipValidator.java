@@ -8,7 +8,16 @@ public class ShipValidator
     {
         String problems = "";
 
-        if (ship.getJump() > 6) problems += "Jump range is greater than 6.\n";
+        if (ship.getJump() > 9) problems += "Jump rating is greater than 9.\n";
+        if (ship.getManeuver() > 9) problems += "Maneuver rating is greater than 9.\n";
+        
+        try {
+            ship.getTonnage();
+        }
+        catch( ShipHasProblemException shpe )
+        {
+            problems += shpe.getMessage() + "\n";
+        }
 
         if ( problems.length() > 0 )
         {

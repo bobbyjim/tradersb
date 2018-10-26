@@ -40,11 +40,11 @@ public class PlayerDAOService {
         Player player = new Player();
         player.id = UniqueGenerator.generateShortID();
         players.put(player.id, player);
-        savePlayer(player);
+        save(player);
         return player;
     }
 
-    public boolean savePlayer(Player player) {
+    private boolean save(Player player) {
         String filename = "player-" + player.id + ".ser";
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
             oos.writeObject(player);
@@ -56,19 +56,30 @@ public class PlayerDAOService {
         return false;
     }
 
-    public void jump(Player player, World destination) throws WorldIsMissingDataException {
+    public void improveSkill( String id, String skill ) throws PlayerNotFoundException
+    {
+        Player player = getPlayer(id);
+        player.improveSkill(skill);
+        save(player);
+    }
+
+    public World jump(String id, World destination) throws PlayerNotFoundException, WorldIsMissingDataException {
+        Player player = getPlayer(id);
         if (player.getWorld().distanceTo(destination) <= player.getShip().getJump()) {
             MapAccessible map = MapFactory.defaultMapEngine;
             destination = map.getWorld(destination.sectorAbbreviation, destination.hex);
             player.setWorld(destination);
-            savePlayer(player);
+            save(player);
         }
+        return player.getWorld();
     }
 
-    public void updateShip(Player player, Ship updatedShip) throws ShipHasProblemException {
+    public Ship updateShip(String id, Ship updatedShip) throws PlayerNotFoundException, ShipHasProblemException {
 
+        Player player = getPlayer(id);
         ShipValidator.validateShip(updatedShip);
         player.ship = updatedShip;
-        savePlayer(player);
+        save(player);
+        return player.ship;
     }
 }

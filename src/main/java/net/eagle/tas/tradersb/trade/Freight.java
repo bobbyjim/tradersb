@@ -28,18 +28,20 @@ public class Freight implements Shippable {
         return ship.getPassageDemand() * 1000 + 8000;
     }
 
-    public void unload(World world) {
+    public int unload(World world) {
+        return tons;
     }
 
-    public void load(Playable player) {
-        Object[] tradeCodes = player.getWorld().tradeCodes();
+    public int load(World sourceWorld, Ship targetShip, int skillDM /*Playable player*/) {
+        Object[] tradeCodes = sourceWorld.tradeCodes();
         int tcCount = tradeCodes.length + 1;
 
-        tons = (flux() + player.getWorld().popDigit()) * tcCount
-                + player.getSkillLevel("liaison")
-                + player.getShip().getPassageDemand();
+        tons = (flux() + sourceWorld.popDigit()) * tcCount
+                + skillDM // player.getSkillLevel("liaison")
+                + targetShip.getPassageDemand();
 
         if (tons < 0) tons = 0;
 
+        return tons;
     }
 }

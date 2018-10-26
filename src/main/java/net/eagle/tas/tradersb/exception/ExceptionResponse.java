@@ -1,5 +1,7 @@
 package net.eagle.tas.tradersb.exception;
 
+import org.springframework.http.HttpStatus;
+
 import java.util.Date;
 
 /**
@@ -18,15 +20,8 @@ public class ExceptionResponse {
         this.details = details;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
-    }
+    public Date getTimestamp() { return timestamp; }
+    public String getMessage() { return message; }
+    public String getDetails() { return details; }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public String getDetails() {
-        return details;
-    }
 }

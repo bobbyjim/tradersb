@@ -29,7 +29,7 @@ public class WorldBuilder {
                     .worldY(Integer.parseInt(hash.get("WorldY").toString()))
                     .build();
         } catch (NullPointerException npe) {
-            throw new WorldIsMissingDataException(hash);
+            throw new WorldIsMissingDataException();
         }
     }
 

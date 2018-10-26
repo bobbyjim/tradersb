@@ -14,8 +14,35 @@ public class Ship implements Serializable {
     private String shipClass = "";
     private String sizeCode;
 
+    private int fuel = 0;
+    private int jump = 0;
+    private int maneuver = 0;
+    private int hold = 0;
+    private int high = 0;
+    private int mid = 0;
+    private int low = 0;
+    private String mission = "Z";
+    private String config = "Z";
+    private int passageDemand = 0;
+    private int crewComfort = 0;
+
+    private Freight freight = new Freight();
+    private Passengers highPassengers = PassengerFactory.createHighPassengersObject();
+    private Passengers midPassengers  = PassengerFactory.createMidPassengersObject();
+    private Passengers lowPassengers  = PassengerFactory.createLowPassengersObject();
+
+    private boolean hasVault = false;
+    private Cargo cargo = new Cargo();
+
     public void setId(String id) {
         this.id = id;
+    }
+    public String getId() {
+        return id;
+    }
+
+    public void update(Ship ship) {
+        this.name = ship.name;
     }
 
     public String getShipClass() {
@@ -32,6 +59,38 @@ public class Ship implements Serializable {
 
     public void setSizeCode(String sizeCode) {
         this.sizeCode = sizeCode;
+    }
+
+    public int getTonnage() throws ShipHasProblemException
+    {
+        switch( sizeCode )
+        {
+            case "A": return 100;
+            case "B": return 200;
+            case "C": return 300;
+            case "D": return 400;
+            case "E": return 500;
+            case "F": return 600;
+            case "G": return 700;
+            case "H": return 800;
+            case "J": return 900;
+            case "K": return 1000;
+            case "L": return 1100;
+            case "M": return 1200;
+            case "N": return 1300;
+            case "P": return 1400;
+            case "Q": return 1500;
+            case "R": return 1600;
+            case "S": return 1700;
+            case "T": return 1800;
+            case "U": return 1900;
+            case "V": return 2000;
+            case "W": return 2100;
+            case "X": return 2200;
+            case "Y": return 2300;
+            case "Z": return 2400;
+        }
+        throw new ShipHasProblemException("Ship size code is invalid (" + sizeCode + ")");
     }
 
     public int getFuel() {
@@ -126,7 +185,7 @@ public class Ship implements Serializable {
         return freight;
     }
 
-    public void setFreight(Shippable freight) {
+    public void setFreight(Freight freight) {
         this.freight = freight;
     }
 
@@ -134,7 +193,7 @@ public class Ship implements Serializable {
         return highPassengers;
     }
 
-    public void setHighPassengers(Shippable highPassengers) {
+    public void setHighPassengers(Passengers highPassengers) {
         this.highPassengers = highPassengers;
     }
 
@@ -142,7 +201,7 @@ public class Ship implements Serializable {
         return midPassengers;
     }
 
-    public void setMidPassengers(Shippable midPassengers) {
+    public void setMidPassengers(Passengers midPassengers) {
         this.midPassengers = midPassengers;
     }
 
@@ -150,38 +209,9 @@ public class Ship implements Serializable {
         return lowPassengers;
     }
 
-    public void setLowPassengers(Shippable lowPassengers) {
+    public void setLowPassengers(Passengers lowPassengers) {
         this.lowPassengers = lowPassengers;
     }
-
-    private int fuel = 0;
-    private int jump = 0;
-    private int maneuver = 0;
-    private int hold = 0;
-    private int high = 0;
-    private int mid = 0;
-    private int low = 0;
-    private String mission = "Z";
-    private String config = "Z";
-    private int passageDemand = 0;
-    private int crewComfort = 0;
-
-    private Shippable freight = new Freight();
-    private Shippable highPassengers = new HighPassengers();
-    private Shippable midPassengers = new MidPassengers();
-    private Shippable lowPassengers = new LowPassengers();
-
-    private boolean hasVault = false;
-    private Cargo cargo = new Cargo();
-
-    public String getId() {
-        return id;
-    }
-
-    public void update(Ship ship) {
-        this.name = ship.name;
-    }
-
 
     public void setVault(boolean vault) {
         this.hasVault = vault;
@@ -208,6 +238,5 @@ public class Ship implements Serializable {
     public String getName() {
         return name;
     }
-
 
 }

@@ -5,25 +5,26 @@ package net.eagle.tas.tradersb.ship;
  * A handy way to build a ship.
  */
 public class ShipBuilder {
-    public static int id = 100;
     Ship newship;
 
     public static ShipBuilder create() {
         ShipBuilder builder = new ShipBuilder();
         builder.newship = new Ship();
-        builder.newship.setId("" + id);
-        id++;
         return builder;
     }
 
     public Ship build() {
-        newship.setName(newship.getShipClass() + "-" + id); // for now, set initial name == class + "-" + id
+        newship.setName(newship.getShipClass() + "-" + newship.getId()); // for now, set initial name == class + "-" + id
         return newship;
     }
 
     /**
      * Build Methods
      **/
+    public ShipBuilder id(String id) {
+        newship.setId( id );
+        return this;
+    }
 
     public ShipBuilder shipClass(String name) {
         newship.setShipClass(name);

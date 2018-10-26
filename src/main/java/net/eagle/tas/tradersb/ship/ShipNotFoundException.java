@@ -1,8 +1,10 @@
 package net.eagle.tas.tradersb.ship;
 
+import net.eagle.tas.tradersb.exception.ExceptionResponse;
+import net.eagle.tas.tradersb.exception.TraderException;
 import org.springframework.http.HttpStatus;
 
-public class ShipNotFoundException extends Exception {
+public class ShipNotFoundException extends TraderException {
 
     public HttpStatus getErrorCode() {
         return HttpStatus.NOT_FOUND;

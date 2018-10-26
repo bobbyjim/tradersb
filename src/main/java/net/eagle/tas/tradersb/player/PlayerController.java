@@ -1,5 +1,7 @@
 package net.eagle.tas.tradersb.player;
 
+import net.eagle.tas.tradersb.exception.ExceptionResponse;
+import net.eagle.tas.tradersb.exception.TraderException;
 import net.eagle.tas.tradersb.ship.Ship;
 import net.eagle.tas.tradersb.ship.ShipHasProblemException;
 import net.eagle.tas.tradersb.world.World;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/players")
@@ -26,6 +29,26 @@ public class PlayerController {
             HttpHeaders headers = new HttpHeaders();
             headers.set(pnfe.getHeaderName(), pnfe.getLocalizedMessage());
             return new ResponseEntity<>(headers, pnfe.getErrorCode());
+        }
+    }
+
+    @GetMapping("{id}/skills")
+    public ResponseEntity<HashMap<String, Integer>> getSkills(@PathVariable String id) {
+        return new ResponseEntity<>(getPlayer(id).getBody().getSkills(), HttpStatus.OK);
+    }
+
+    @PutMapping("{id}/skills/{skillname}")
+    public ResponseEntity<HashMap<String, Integer>> improveSkill(@PathVariable String id, @PathVariable String skillname)
+    {
+        try {
+            playerService.improveSkill(id, skillname);
+            return getSkills(id);
+        }
+        catch( TraderException e )
+        {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(e.getHeaderName(), e.getLocalizedMessage());
+            return new ResponseEntity<>(headers, e.getErrorCode());
         }
     }
 
@@ -45,16 +68,12 @@ public class PlayerController {
     @ResponseBody
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     public ResponseEntity<Ship> updatePlayerShip(@PathVariable String id, @RequestBody Ship updatedShip) {
-        ResponseEntity<Player> rsp = getPlayer(id);
-        Player player = rsp.getBody();
         try {
-            playerService.updateShip(player, updatedShip);
-            return new ResponseEntity<>(player.getShip(), HttpStatus.ACCEPTED);
-        } catch (ShipHasProblemException suhpe)
-        {
+            return new ResponseEntity<>(playerService.updateShip(id, updatedShip), HttpStatus.ACCEPTED);
+        } catch (TraderException e) {
             HttpHeaders headers = new HttpHeaders();
-            headers.set(suhpe.getHeaderName(), suhpe.getLocalizedMessage());
-            return new ResponseEntity<>(headers, suhpe.getErrorCode());
+            headers.set(e.getHeaderName(), e.getLocalizedMessage());
+            return new ResponseEntity<>(headers, e.getErrorCode());
         }
     }
 
@@ -70,12 +89,9 @@ public class PlayerController {
     @ResponseBody
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     public ResponseEntity<World> jump(@PathVariable String id, @RequestBody World destination) {
-        ResponseEntity<Player> rsp = getPlayer(id);
-        Player player = rsp.getBody();
         try {
-            playerService.jump(player, destination);
-            return new ResponseEntity<>(player.getWorld(), HttpStatus.ACCEPTED);
-        } catch (WorldIsMissingDataException wimde) {
+            return new ResponseEntity<>(playerService.jump(id, destination), HttpStatus.ACCEPTED);
+        } catch (TraderException wimde) {
             HttpHeaders headers = new HttpHeaders();
             headers.set(wimde.getHeaderName(), wimde.getLocalizedMessage());
             return new ResponseEntity<>(headers, wimde.getErrorCode());

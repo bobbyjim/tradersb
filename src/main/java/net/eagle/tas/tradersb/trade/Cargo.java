@@ -37,11 +37,11 @@ public class Cargo implements Shippable {
         return buyPrice;
     }
 
-    public void unload(World world) {
-
+    public int unload(World world) {
+        return 0;
     }
 
-    public void load(Playable player) {
-
+    public int load(World sourceWorld, Ship targetShip, int skillDM) {
+        return 0;
     }
 }

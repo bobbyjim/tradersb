@@ -1,10 +1,11 @@
 package net.eagle.tas.tradersb.ship;
 
+import net.eagle.tas.tradersb.exception.TraderException;
 import org.springframework.http.HttpStatus;
 
-public class ShipHasProblemException extends Exception {
+public class ShipHasProblemException extends TraderException {
 
-    private String msg = "Ship fails validation.";
+    private String msg;
 
     public ShipHasProblemException(String msg)
     {

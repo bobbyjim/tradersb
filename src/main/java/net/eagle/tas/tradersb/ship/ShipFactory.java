@@ -15,6 +15,7 @@ public class ShipFactory {
             default:
                 return ShipBuilder.create()
                         .shipClass("Beowulf")
+                        .id("A-BS11")
                         .mission("A")
                         .sizeCode("B")
                         .config("U")
@@ -31,6 +32,7 @@ public class ShipFactory {
             case "Marava":
                 return ShipBuilder.create()
                         .shipClass("Marava")
+                        .id("A2-BS12")
                         .mission("A2")
                         .sizeCode("B")
                         .config("S")
@@ -42,22 +44,28 @@ public class ShipFactory {
                         .maneuver(1)
                         .build();
 
-            case "CM":
+            case "C":  return ShipFactory.createShipFromQSP("Cruiser C-HU33 264 50 t 2/16/4");
             case "Leviathan": // merchant cruiser
-                return ShipFactory.createShipFromQSP("Leviathan R2-RC33 600 250 t 12/12/20");
-
-            case "M": // subsidized liner
+            case "CM": return ShipFactory.createShipFromQSP("Leviathan CM-RC43 620 250 t 12/12/20");
+            case "E":  return ShipFactory.createShipFromQSP("Gazelle E-DS53 140 40 t 8/4/8" );
+            case "F":  return ShipFactory.createShipFromQSP("Frieghter F-KS13 310 300 t 12/12/20" );
+            case "G":  return ShipFactory.createShipFromQSP("Frigate G-FS52 150 50 t 10/5/10" );
+            case "J":  return ShipFactory.createShipFromQSP("Seeker J-AA11 11 16 f 0/2/2" );
+            case "K":  return ShipFactory.createShipFromQSP("Safari K-BA12 22 25 t 8/4/4" );
+            case "L":  return ShipFactory.createShipFromQSP("Lab L-DC12 88 150 f 10/20/4" );
             case "Liner":
-                return ShipFactory.createShipFromQSP("Liner M-FS31 210 100 t 30/10/30");
-
-            case "R": // subsidized merchant
+            case "M":  return ShipFactory.createShipFromQSP("Liner M-FS13 210 100 t 30/10/30");
+            case "M2": return ShipFactory.createShipFromQSP("Long-Liner M2-ZS14 1200 1500 t 20/20/30");
+            case "P":  return ShipFactory.createShipFromQSP("Corsair P-DS42 96 100 t 0/10/10");
             case "Merchant":
-                return ShipFactory.createShipFromQSP("Merchant R-DS11 44 100 t 16/4/20");
-
-            case "S": // scout
+            case "R":  return ShipFactory.createShipFromQSP("Merchant R-DS11 44 100 t 16/4/20");
             case "Scout":
-                return ShipFactory.createShipFromQSP("Scout S-AA22 22 10 f 0/4/0 ");
-
+            case "S":  return ShipFactory.createShipFromQSP("Scout S-AA22 22 8 f 0/4/0 ");
+            case "T":  return ShipFactory.createShipFromQSP("Transport T-KU12 210 100 t 4/20/40");
+            case "U":  return ShipFactory.createShipFromQSP("Packet U-CA33 99 25 t 8/8/8");
+            case "W":  return ShipFactory.createShipFromQSP("Barge W-AC11 11 35 f 0/4/4");
+            case "X":  return ShipFactory.createShipFromQSP("Xboat X-AC04 40 1 t 0/1/0");
+            case "Y":  return ShipFactory.createShipFromQSP("Yacht Y-EL41 54 50 t 16/8/4");
         }
     }
 
@@ -80,6 +88,7 @@ public class ShipFactory {
     public static Ship createShipFromQSP(String extendedQSP) {
         String[] elements = extendedQSP.split(" ");
         String className = elements[0];
+        String qspId = elements[1];
         String[] qsp = elements[1].split("-");
         String mission = qsp[0];
         int fuel = Integer.parseInt(elements[2]);
@@ -94,6 +103,7 @@ public class ShipFactory {
 
         Ship ship = ShipBuilder.create()
                 .shipClass(className)
+                .id(qspId)
                 .sizeCode(size)
                 .mission(mission)
                 .hold(hold)
