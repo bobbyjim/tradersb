@@ -15,6 +15,7 @@ POST /players          ; creates a new player
 GET /players/$id       ; returns the player record
 
 GET /players/$id/ship  ; returns the player's ship record
+PUT /players/$id/ship  ; upgrade the ship
 
 GET /players/$id/world ; returns the player's current world
 PUT /players/$id/world ; jumps to a neighboring world
