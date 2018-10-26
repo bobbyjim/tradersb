@@ -11,8 +11,10 @@ GET /ships             ; lists the ship types available
 
 # PLAYER API
 ```
-POST /players          ; creates a new player
-GET /players/$id       ; returns the player record
+POST /players           ; creates a new player
+GET /players/$id        ; returns the player record
+GET /players/$id/skills ; get the skills list
+PUT /players/$id/skills/$skillname ; add or improve a skill
 
 GET /players/$id/ship  ; returns the player's ship record
 PUT /players/$id/ship  ; upgrade the ship
