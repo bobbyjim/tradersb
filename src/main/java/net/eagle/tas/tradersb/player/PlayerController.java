@@ -1,11 +1,8 @@
 package net.eagle.tas.tradersb.player;
 
-import net.eagle.tas.tradersb.exception.ExceptionResponse;
 import net.eagle.tas.tradersb.exception.TraderException;
 import net.eagle.tas.tradersb.ship.Ship;
-import net.eagle.tas.tradersb.ship.ShipHasProblemException;
 import net.eagle.tas.tradersb.world.World;
-import net.eagle.tas.tradersb.world.WorldIsMissingDataException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +17,11 @@ import java.util.HashMap;
 public class PlayerController {
     @Autowired
     private PlayerDAOService playerService;
+
+    @PostMapping
+    public Player createPlayer() {
+        return playerService.createPlayer();
+    }
 
     @GetMapping("{id}")
     public ResponseEntity<Player> getPlayer(@Valid @PathVariable String id) {
@@ -98,9 +100,24 @@ public class PlayerController {
         }
     }
 
-    @PostMapping
-    public Player createPlayer() {
-        return playerService.createPlayer();
-    }
+    // GET /players/$id/cargo           see cargo available on this world
+
+    // POST /players/$id/cargo          buy and load cargo
+
+    // DELETE /players/$id/cargo/$cid   sell cargo on current world
+
+
+
+    // POST /players/$id/freight        load freight
+
+    // DELETE /players/$id/freight      unload freight
+
+
+
+    // GET /players/$id/passengers      see H/M/L passengers available
+
+    // POST /players/$id/passengers     take on passengers
+
+    // DELETE /players/$id/passengers   deplane passengers
 
 }
