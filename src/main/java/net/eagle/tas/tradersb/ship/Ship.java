@@ -25,6 +25,7 @@ public class Ship implements Serializable {
     private String config = "Z";
     private int passageDemand = 0;
     private int crewComfort = 0;
+    int cost;
 
     private Freight freight = new Freight();
     private Passengers highPassengers = PassengerFactory.createHighPassengersObject();
@@ -238,5 +239,9 @@ public class Ship implements Serializable {
     public String getName() {
         return name;
     }
+
+    public void setCost(int mcr) { this.cost = mcr; }
+
+    public int getCost() { return cost; }
 
 }

@@ -95,4 +95,9 @@ public class ShipBuilder {
         newship.setVault(vault);
         return this;
     }
+
+    public ShipBuilder cost(int mcr) {
+        newship.setCost(mcr);
+        return this;
+    }
 }

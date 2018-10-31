@@ -20,7 +20,7 @@ public class ShipFactory {
                         .sizeCode("B")
                         .config("U")
                         .fuel(21)
-                        .mid(8)
+                        .mid(6)
                         .low(10)
                         .hold(82)
                         .jump(1)
@@ -44,11 +44,15 @@ public class ShipFactory {
                         .maneuver(1)
                         .build();
 
-            case "C":  return ShipFactory.createShipFromQSP("Cruiser C-HU33 264 50 t 2/16/4");
+            case "Maada": return ShipFactory.createShipFromQSP("Maada A-BS11 23 60 f 8/0/4 41");
+            case "Eakhau": return ShipFactory.createShipFromQSP("Eakhau A-DS12 84 162 t 8/2/16 93");
+            case "C":  return ShipFactory.createShipFromQSP("Cruiser C-HU33 276 25 t 2/2/10 300");
             case "Leviathan": // merchant cruiser
-            case "CM": return ShipFactory.createShipFromQSP("Leviathan CM-RC43 620 250 t 12/12/20");
-            case "E":  return ShipFactory.createShipFromQSP("Gazelle E-DS53 140 40 t 8/4/8" );
-            case "F":  return ShipFactory.createShipFromQSP("Frieghter F-KS13 310 300 t 12/12/20" );
+            case "R2": return ShipFactory.createShipFromQSP("Leviathan R2-TB43 612 140 t 4/2/4 639");
+            case "E":  return ShipFactory.createShipFromQSP("Gazelle E-DS53 140 2 t 0/0/10 274" );
+            case "Corvette": // patrol corvette
+                       return ShipFactory.createShipFromQSP("Lurushaar EB-EA53 200 6 t 0/0/10 307");
+            case "F":  return ShipFactory.createShipFromQSP("Susa F-KS13 317 417 t 0/12/10 229" );
             case "G":  return ShipFactory.createShipFromQSP("Frigate G-FS52 150 50 t 10/5/10" );
             case "J":  return ShipFactory.createShipFromQSP("Seeker J-AA11 11 16 f 0/2/2" );
             case "K":  return ShipFactory.createShipFromQSP("Safari K-BA12 22 25 t 8/4/4" );
@@ -76,7 +80,7 @@ public class ShipFactory {
      * <p>
      * An *ideal* QSP looks like this:
      * <p>
-     * Marava A2-BS11 fuel hold vault h/m/l
+     * Marava A2-BS11 fuel hold vault h/m/l cost
      * |    |  ||||
      * Class name -----    |  ||||
      * Mission -------------  ||||
@@ -95,6 +99,8 @@ public class ShipFactory {
         int hold = Integer.parseInt(elements[3]);
         boolean vault = Boolean.parseBoolean(elements[4]);
         String[] pass = elements[5].split("/");
+        int cost = 0;
+        if ( elements.length > 6 ) cost = Integer.parseInt(elements[6]);
 
         String size = qsp[1].substring(0, 1);
         String config = qsp[1].substring(1, 2);
@@ -115,6 +121,7 @@ public class ShipFactory {
                 .mid(Integer.parseInt(pass[1]))
                 .low(Integer.parseInt(pass[2]))
                 .hasVault(vault)
+                .cost(cost)
                 .build();
 
         return ship;
