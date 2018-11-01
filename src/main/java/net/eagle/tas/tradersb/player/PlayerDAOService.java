@@ -11,12 +11,18 @@ import net.eagle.tas.tradersb.world.WorldIsMissingDataException;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Component
 public class PlayerDAOService {
 
     private HashMap<String, Player> players = new HashMap<>();
+
+    public List<Player> getAllPlayers() {
+        return new ArrayList<Player>(players.values());
+    }
 
     public Player getPlayer(String id) throws PlayerNotFoundException {
         if (players.containsKey(id)) {

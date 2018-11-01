@@ -1,8 +1,16 @@
 # Trader
-Interstellar merchant simulation API. Carry passengers and cargo to other worlds!
+Interstellar merchant simulation API. Explore Charted Space!
 
 # Source
-100% Java SpringBoot
+Java SpringBoot with Swagger2
+
+# REST and Swagger
+The API is a set of atomic HTTP calls, using the typical GET, PUT, POST, and DELETE
+commands, using JSON as the payload.  In other words, this is RESTful. When running,
+the service is accessed on port 10203.
+
+Swagger is a convenient, "experimentable" wrapper to REST APIs. To access the Swagger
+page, surf to http://localhost:10203/swagger-ui.html
 
 # GENERAL API
 ```

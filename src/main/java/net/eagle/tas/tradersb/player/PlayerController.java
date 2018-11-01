@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/players")
@@ -23,6 +24,11 @@ public class PlayerController {
     @PostMapping
     public Player createPlayer() {
         return playerService.createPlayer();
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<Player>> getallPlayers() {
+        return new ResponseEntity<>(playerService.getAllPlayers(), HttpStatus.OK);
     }
 
     @GetMapping("{id}")
