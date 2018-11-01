@@ -82,7 +82,7 @@ public class ShipFactory {
      * <p>
      * Marava A2-BS11 fuel hold vault h/m/l cost
      * |    |  ||||
-     * Class name -----    |  ||||
+     * Class name -----    |  ||||22
      * Mission -------------  ||||
      * Size -------------------|||
      * Hull Configuration ------||

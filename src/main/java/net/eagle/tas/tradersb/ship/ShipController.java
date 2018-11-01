@@ -1,5 +1,9 @@
 package net.eagle.tas.tradersb.ship;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,11 +15,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ships")
+@Api(value = "ships", description=" ", tags={ "Ships" })
 public class ShipController {
     @Autowired
     private ShipDAOService service;
 
     // GET /ships
+    @ApiOperation(value = "Get all ships", notes = "", response = Ship.class, tags={ "Ships"} )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Return a list of all ships", response = Ship.class)
+    })
     @GetMapping()
     public List<Ship> getAllShips() {
         return service.getAllShips();
