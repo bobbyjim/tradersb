@@ -23,14 +23,19 @@ public class ShipController {
     // GET /ships
     @ApiOperation(value = "Get all ships", notes = "", response = Ship.class, tags={ "Ships"} )
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Return a list of all ships", response = Ship.class)
+            @ApiResponse(code = 200, message="Returns a list of all ships", response = Ship.class)
     })
     @GetMapping()
     public List<Ship> getAllShips() {
         return service.getAllShips();
     }
 
+
     // GET /ships/$id
+    @ApiOperation(value = "Get a ship by ID", notes="", response=Ship.class, tags={ "Ships" } )
+    @ApiResponses(value = {
+            @ApiResponse(code=200, message="Returns ship data", response=Ship.class)
+    })
     @GetMapping("{id}")
     public ResponseEntity<Ship> getShipById(@Valid @PathVariable String id) {
         try {
@@ -43,6 +48,10 @@ public class ShipController {
     }
 
     // PUT /ships
+    @ApiOperation(value="Update a player's ship", notes="", response=Ship.class, tags={"Ships"})
+    @ApiResponses(value = {
+            @ApiResponse(code=200, message="Ship Updated", response=Ship.class)
+    })
     @PutMapping("{id}")
     public ResponseEntity<Ship> updateShip(@Valid @PathVariable String id, @RequestBody Ship params) {
         try {

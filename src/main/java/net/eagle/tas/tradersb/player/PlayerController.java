@@ -1,5 +1,6 @@
 package net.eagle.tas.tradersb.player;
 
+import io.swagger.annotations.Api;
 import net.eagle.tas.tradersb.exception.TraderException;
 import net.eagle.tas.tradersb.ship.Ship;
 import net.eagle.tas.tradersb.world.World;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 
 @RestController
 @RequestMapping("/players")
+@Api(value="Players", description="Player Management", tags={ "Player" })
 public class PlayerController {
     @Autowired
     private PlayerDAOService playerService;
