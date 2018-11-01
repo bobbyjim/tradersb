@@ -36,6 +36,7 @@ GET /players/$id/hex   ; returns the player's sector and hex number only
 # Status
 * "Star chart" map data is pulled from TravellerMap.com.
 * Your data is persisted in a serialized Java object.
+* Trades are calculated using the rules in the Traveller5 Core Rulebook (http://traveller5.net/Shop-List%2006%20Traveller5.html).
 
 # TO DO
 * Lots!
